@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма реєстрації</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-container">
+        <h1 class="main-title" id="mainTitle">Простір, що надихає</h1>
+
+        
+        <div class="card" id="formCard">
+            <h2 class="card-title" id="formTitle">Створити обліковий запис</h2>
+            
+            <p class="card-subtitle" id="formSubtitle">
+                або <a href="#" id="toggleLink" onclick="switchToLogin(event)">увійти</a>
+            </p>
+
+            <form class="form">
+                <div id="nameFieldContainer">
+                    <input type="text" id="nameInput" placeholder="Ім'я" class="input-field" required />
+                </div>
+                
+                <input type="email" placeholder="Електронна адреса" class="input-field" required />
+                <input type="password" placeholder="Пароль" class="input-field" required />
+
+                <button type="submit" class="btn-primary" id="submitBtn">Далі</button>
+            </form>
+        </div>
+
+        <div id="successScreen" style="display: none; text-align: center;">
+            <h2 id="successMessage" style="color: #0b1a40; margin-bottom: 20px;">Успішно!</h2>
+            <img src="/img/end_backgraund.jpg" alt="Успіх" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        </div>
+    </div>
+
+<script>
+    let isLoginMode = false; 
+
+    function switchToLogin(event) {
+        event.preventDefault(); 
+        
+        const formTitle = document.getElementById('formTitle');
+        const formSubtitle = document.getElementById('formSubtitle');
+        const nameContainer = document.getElementById('nameFieldContainer');
+        const nameInput = document.getElementById('nameInput'); 
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (!isLoginMode) {
+            formTitle.innerText = "Увійти в обліковий запис";
+            formSubtitle.innerHTML = 'або <a href="#" id="toggleLink" onclick="switchToLogin(event)">зареєструватися</a>';
+            nameContainer.style.display = 'none';
+            nameInput.removeAttribute('required'); 
+            submitBtn.innerText = "Увійти";
+            isLoginMode = true;
+        } else {
+            formTitle.innerText = "Створити обліковий запис";
+            formSubtitle.innerHTML = 'або <a href="#" id="toggleLink" onclick="switchToLogin(event)">увійти</a>';
+            nameContainer.style.display = 'block';
+            nameInput.setAttribute('required', ''); 
+            submitBtn.innerText = "Далі";
+            isLoginMode = false;
+        }
+    }
+
+    const formElement = document.querySelector('.form');
+    formElement.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('mainTitle').style.display = 'none';
+
+       
+        const successMessage = document.getElementById('successMessage');
+        if (isLoginMode) {
+            successMessage.innerText = "Успішний вхід!";
+        } else {
+            successMessage.innerText = "Реєстрація успішна!";
+        }
+
+        document.getElementById('successScreen').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
